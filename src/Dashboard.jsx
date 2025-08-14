@@ -83,6 +83,11 @@ function Dashboard() {
     navigate('/addContact');
   };
 
+  const handleEditContact = (contactId) => {
+    navigate(`/editContact/${contactId}`);
+  };
+
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
@@ -123,7 +128,7 @@ function Dashboard() {
                   <span>No emails</span>
                 )}
               </p>
-              <button>Edit</button>
+              <button onClick={() => handleEditContact(contact.id)} >Edit</button>
               <button 
                 onClick={() => handleDeleteContact(contact.id)}
                 style={{ backgroundColor: '#ff4444', color: 'white' }}

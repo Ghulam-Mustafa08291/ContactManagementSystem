@@ -7,6 +7,8 @@ import RegistrationPage from './RegistrationPage'
 import Dashboard from './Dashboard.jsx'
 import AddContactForm from './AddContactForm'
 import UserProfile from './UserProfile'
+import EditContact from './EditContact.jsx';
+
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/addContact" element={<AddContactForm  />} />
+        <Route path="/editContact/:contactId" element={<EditContact />} />
+
         {/* <Route path="/contact/:id" element={<ContactDetails />} /> */}
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

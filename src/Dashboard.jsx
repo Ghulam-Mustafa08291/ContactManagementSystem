@@ -18,37 +18,70 @@ function Dashboard() {
       return;
     }
 
-    const fetchContacts = async () => {
-      try {
-        const res = await fetch('http://localhost:8080/api/users/contacts', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!res.ok) {
-          const body = await res.text().catch(() => '');
-          throw new Error(`Failed to fetch contacts: ${res.status} ${res.statusText} | ${body}`);
-        }
-
-        const data = await res.json();
-        console.log('Fetched contacts:', data);
-        setContacts(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error('Error fetching contacts:', err);
-      }
-    };
-
     fetchContacts();
   }, [navigate]);
+
+  const fetchContacts = async () => {
+    const token = localStorage.getItem('token');
+    
+    try {
+      const res = await fetch('http://localhost:8080/api/users/contacts', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        throw new Error(`Failed to fetch contacts: ${res.status} ${res.statusText} | ${body}`);
+      }
+
+      const data = await res.json();
+      console.log('Fetched contacts:', data);
+      setContacts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error('Error fetching contacts:', err);
+    }
+  };
+
+  const handleDeleteContact = async (contactId) => {
+    // Confirm before deleting
+    if (!window.confirm('Are you sure you want to delete this contact?')) {
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/contacts/${contactId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        // Remove the contact from the local state (no need to refetch all)
+        setContacts(contacts.filter(contact => contact.id !== contactId));
+        alert('Contact deleted successfully!');
+      } else {
+        const errorText = await response.text();
+        alert(`Failed to delete contact: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+      alert('Network error. Please try again.');
+    }
+  };
 
   const handleLogOut = () => {
     navigate('/');
   };
 
-  const onAddContactClicked = () =>{
+  const onAddContactClicked = () => {
     navigate('/addContact');
-  }
+  };
 
   return (
     <div className="dashboard-container">
@@ -59,7 +92,7 @@ function Dashboard() {
 
       <div className="dashboard-controls">
         <input type="text" placeholder="Search contacts..." className="search-input" />
-        <button  onClick={onAddContactClicked} className="add-contact-button">+ Add Contact</button>
+        <button onClick={onAddContactClicked} className="add-contact-button">+ Add Contact</button>
       </div>
 
       <div className="contacts-list">
@@ -91,7 +124,12 @@ function Dashboard() {
                 )}
               </p>
               <button>Edit</button>
-              <button>Delete</button>
+              <button 
+                onClick={() => handleDeleteContact(contact.id)}
+                style={{ backgroundColor: '#ff4444', color: 'white' }}
+              >
+                Delete
+              </button>
             </div>
           ))
         ) : (

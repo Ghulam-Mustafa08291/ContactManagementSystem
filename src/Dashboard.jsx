@@ -46,6 +46,10 @@ function Dashboard() {
     navigate('/');
   };
 
+  const onAddContactClicked = () =>{
+    navigate('/addContact');
+  }
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
@@ -55,7 +59,7 @@ function Dashboard() {
 
       <div className="dashboard-controls">
         <input type="text" placeholder="Search contacts..." className="search-input" />
-        <button className="add-contact-button">+ Add Contact</button>
+        <button  onClick={onAddContactClicked} className="add-contact-button">+ Add Contact</button>
       </div>
 
       <div className="contacts-list">

@@ -14,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/addContact" element={<AddContactForm  />} />
         {/* <Route path="/contact/:id" element={<ContactDetails />} /> */}
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>

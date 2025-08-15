@@ -6,8 +6,9 @@ import LoginPage from './LoginPage.jsx'
 import RegistrationPage from './RegistrationPage'
 import Dashboard from './Dashboard.jsx'
 import AddContactForm from './AddContactForm'
-import UserProfile from './UserProfile'
+// import UserProfile from './UserProfile'
 import EditContact from './EditContact.jsx';
+import UserProfile from "./UserProfile.jsx"
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/addContact" element={<AddContactForm  />} />
         <Route path="/editContact/:contactId" element={<EditContact />} />
+        <Route path="/userprofile" element={<UserProfile />} />
 
         {/* <Route path="/contact/:id" element={<ContactDetails />} /> */}
         {/* <Route path="*" element={<NotFound />} /> */}

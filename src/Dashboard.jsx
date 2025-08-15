@@ -117,10 +117,7 @@ function Dashboard() {
     navigate(`/editContact/${contactId}`);
   };
 
-  const handleLogOut = () => {
-    localStorage.removeItem('token');
-    navigate('/');
-  };
+  
 
   const onAddContactClicked = () => {
     navigate('/addContact');
@@ -134,11 +131,15 @@ function Dashboard() {
     setSearchTerm("");
   };
 
+  const onUsesrProfileClicked= () => {
+    navigate('/userprofile')
+  }
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
         <h2>Contact Dashboard</h2>
-        <button onClick={handleLogOut} className="logout-button">Logout</button>
+        <button onClick={onUsesrProfileClicked} > User Details</button>
       </header>
 
       <div className="dashboard-controls">
